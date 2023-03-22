@@ -14,3 +14,9 @@ If you would rather use the Gitpod development environment for this app:
 
 - Change the dropdown that says "Web IDE" to "Gitpod" (if it already says "Gitpod" skip this step)
 - Click the button that says "Gitpod"
+
+<BR><BR>
+
+## Results 
+Below is the photo of the microblog home that now displays all of the rows in the blog posts table.
+![updated microblog home page](https://github.com/rjohanek/microblog_main/blob/1b628dbf5dbb94ec7d21e276481b2df1c72a01c6/app/static/updated_microblog.JPG)
