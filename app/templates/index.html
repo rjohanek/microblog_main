@@ -3,14 +3,9 @@
 {% block app_content %}
     <h1>You're doing it!</h1>
     <br>
-    <table class="table table-hover">
-        <tr>
-            <td>
-                <br>
-                <span id="post1">This is my one and only blog post. Can you add more using a for loop?</span>
-            </td>
-        </tr>
-    </table>
+    {% for post in posts %}
+    {% include '_post.html' %}
+    {% endfor %}
     <nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">
