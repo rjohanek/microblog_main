@@ -29,7 +29,7 @@ babel = Babel()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://rjohanek:MVEMJustSUN99()@users.cd32i773no8s.us-east-2.rds.amazonaws.com:5432/users"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://rjohanek:MVEMJustSUN99()@signups.cd32i773no8s.us-east-2.rds.amazonaws.com:5432/postgres"
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -54,6 +54,7 @@ def create_app(config_class=Config):
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
+
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:

@@ -88,7 +88,7 @@ followers = db.Table(
 )
 
 class SignUp(db.Model):
-    __tablename__ = 'sign_ups'
+    __tablename__ = 'signups'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=False)
     email = db.Column(db.String(120), index=True, unique=True)
