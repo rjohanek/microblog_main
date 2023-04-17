@@ -87,6 +87,19 @@ followers = db.Table(
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+class SignUp(db.Model):
+    __tablename__ = 'sign_ups'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True, unique=False)
+    email = db.Column(db.String(120), index=True, unique=True)
+
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self.doors = doors
+
+    def __repr__(self):
+        return f"<SignUp {self.email}>"
 
 class User(UserMixin, PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
