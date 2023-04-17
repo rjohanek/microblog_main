@@ -13,6 +13,7 @@ from elasticsearch import Elasticsearch
 from redis import Redis
 import rq
 from config import Config
+import psycopg2
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -28,6 +29,7 @@ babel = Babel()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://rjohanek:MVEMJustSUN99()@users.cd32i773no8s.us-east-2.rds.amazonaws.com:5432/users"
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -87,6 +89,9 @@ def create_app(config_class=Config):
 
         app.logger.setLevel(logging.INFO)
         app.logger.info('Microblog startup')
+
+    with app.app_context():
+        db.create_all()
 
     return app
 
