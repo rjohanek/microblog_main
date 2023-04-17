@@ -6,8 +6,8 @@ from flask_babel import _, get_locale
 from langdetect import detect, LangDetectException
 from app import db
 from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, \
-    MessageForm
-from app.models import User, Post, Message, Notification
+    MessageForm, SignUpForm
+from app.models import User, Post, Message, Notification, SignUp
 from app.translate import translate
 from app.main import bp
 
@@ -15,12 +15,24 @@ from app.main import bp
 @bp.route('/index', methods=['GET', 'POST'])
 def index():
     posts = [Post(body='my first post!', user_id=1, language='EN'),
-             Post(body='my second post!', user_id=2, language='EN'),
-             Post(body='my third post!', user_id=3, language='EN'),
-             Post(body='my fourth post!', user_id=1, language='EN'),
-             Post(body='my fifth post!', user_id=2, language='EN')]
-    return render_template('index.html', title=_('Home'), posts=posts)
+            Post(body='my second post!', user_id=2, language='EN'),
+            Post(body='my third post!', user_id=3, language='EN'),
+            Post(body='my fourth post!', user_id=1, language='EN'),
+            Post(body='my fifth post!', user_id=2, language='EN')]
+    form = SignUpForm()
+    sign_up(form)
+    return render_template('index.html', title=_('Home'), form=form, posts=posts)
 
+def sign_up(form):
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        new_signup = SignUp(name=name, email=email)
+        db.session.add(new_signup)
+        db.session.commit()
+        form.name.data = ""
+        form.email.data = ""
+        flash(_('You have signed up!'))
 
 @bp.route('/explore')
 def explore():
