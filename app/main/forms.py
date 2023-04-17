@@ -1,10 +1,19 @@
 from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Length
+from wtforms.validators import ValidationError, DataRequired, Length, Email
 from flask_babel import _, lazy_gettext as _l
-from app.models import User
+from app.models import User, SignUp
 
+class SignUpForm(FlaskForm):
+    name = StringField(_l('Name'), validators=[DataRequired()])
+    email = StringField(_l('Email'), validators=[DataRequired(), Email()])
+    submit = SubmitField(_l('Submit'))
+
+    def validate_email(self, email):
+        user = SignUp.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError(_('Please use different email.'))
 
 class EditProfileForm(FlaskForm):
     username = StringField(_l('Username'), validators=[DataRequired()])
